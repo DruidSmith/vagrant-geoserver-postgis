@@ -1,7 +1,7 @@
 # vagrant-geoserver-postgis
 Vagrantfile and provisioner for a PostGIS/GeoServer box (running trusty64)
 
-![](http://aivolution.com/images/icon-technology-geoserver.png) ![](http://cdn.rawgit.com/cfoellmann/chocolatey-packages/master/icons/vagrant.png)
+![](http://cdn.rawgit.com/cfoellmann/chocolatey-packages/master/icons/vagrant.png) ![](http://aivolution.com/images/icon-technology-geoserver.png) 
 
 ### Background
 
@@ -32,5 +32,3 @@ The VM can be shut down by using 'vagrant halt' - and can be destroyed by using 
 After the VM is up, the user will want to change any relevant passwords and make appropriate changes...
 
 This is currently still a work in progress - if there are system tweaks that are recommended, or ways to improve the provisioner bash script, please submit as changes.
-
-
