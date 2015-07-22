@@ -1,6 +1,8 @@
 # vagrant-geoserver-postgis
 Vagrantfile and provisioner for a PostGIS/GeoServer box (running trusty64)
 
+![]({{site.baseurl}}/http://aivolution.com/images/icon-technology-geoserver.png) ![]({{site.baseurl}}/http://cdn.rawgit.com/cfoellmann/chocolatey-packages/master/icons/vagrant.png)
+
 ### Background
 
 This is an attempt to provide an easy and replicatable way to rapidly stand up a GeoServer instance for development or other purposes in an automated way, using vagrant.
