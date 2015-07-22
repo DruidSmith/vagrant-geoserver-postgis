@@ -1,7 +1,7 @@
 # vagrant-geoserver-postgis
 Vagrantfile and provisioner for a PostGIS/GeoServer box (running trusty64)
 
-![]({{site.baseurl}}/http://aivolution.com/images/icon-technology-geoserver.png) ![]({{site.baseurl}}/http://cdn.rawgit.com/cfoellmann/chocolatey-packages/master/icons/vagrant.png)
+![](http://aivolution.com/images/icon-technology-geoserver.png) ![](http://cdn.rawgit.com/cfoellmann/chocolatey-packages/master/icons/vagrant.png)
 
 ### Background
 
