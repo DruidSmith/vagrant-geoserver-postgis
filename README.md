@@ -31,4 +31,20 @@ The VM can be shut down by using 'vagrant halt' - and can be destroyed by using 
 
 After the VM is up, the user will want to change any relevant passwords and make appropriate changes...
 
+Not addressed:  Additional PostGIS setup once within postgres, for example 
+
+> 	sudo -u postgres psql
+	CREATE EXTENSION adminpack;
+	service postgresql restart 
+	SELECT pg_reload_conf();
+	SELECT name, setting FROM pg_settings where category='File Locations';
+	\q
+	sudo su - postgres
+    createuser -d -E -i -l -P -r -s postgisuser
+    et cetera...
+    
+See PostGIS post-install instructions - http://postgis.net/install/   
+pgrouting not installed - line can be uncommented in provisioner script
+
+
 This is currently still a work in progress - if there are system tweaks that are recommended, or ways to improve the provisioner bash script, please submit as changes.
