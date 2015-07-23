@@ -20,22 +20,25 @@ echo *** Installing PostGIS ***
 # Install pgRouting package (for Ubuntu 14.04)
 # sudo apt-get install postgresql-9.4-pgrouting
 echo ' '
-echo *** PostGIS Installed - note there will be post-configuration steps needed ***
+echo --- PostGIS Installed - note there will be post-configuration steps needed ---
 
 # Install JRE for GeoServer
 echo ' '
-echo *** Installing JRE ***
+echo --- Installing JRE ---
 sudo apt-get install -y default-jre
 
 # Config JRE
 JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64
 export JAVA_HOME
 
+echo ' '
+echo --- Installing unzip ---
+
 # Install unzip
 sudo apt-get install -y unzip
 
 echo ' '
-echo *** Setting Up for GeoServer ***
+echo --- Setting Up for GeoServer ---
 echo "export GEOSERVER_HOME=/usr/local/geoserver/" >> ~/.profile
 . ~/.profile
 
@@ -52,13 +55,15 @@ echo --- Downloading GeoServer package - please wait ---
 
 wget -nv -O tmp.zip http://sourceforge.net/projects/geoserver/files/GeoServer/2.7.1.1/geoserver-2.7.1.1-bin.zip && unzip tmp.zip -d /usr/local/ && rm tmp.zip
 
+echo ' '
+echo --- Package unzipped - configuring GeoServer directory ---
 cp -r /usr/local/geoserver-2.7.1.1/* /usr/local/geoserver && sudo rm -rf /usr/local/geoserver-2.7.1.1/
 
 echo ' '
 echo --- GeoServer Installed ---
 
 echo ' '
-echo --- Getting ready to run GeoServer ***
+echo --- Getting ready to run GeoServer ---
 
 sudo chown -R vagrant /usr/local/geoserver/
 
@@ -91,4 +96,13 @@ DAEMON_ARGS="$JAVA_OPTS $DEBUG_OPTS -DGEOSERVER_DATA_DIR=$GEOSERVER_DATA_DIR -Dj
 # Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
 . /lib/lsb/init-functions
 
-sh /usr/local/geoserver/bin/startup.sh
+echo ' '
+echo --- Launching GeoServer startup script ---
+echo --- This will run in the background with nohup mode ---
+echo --- To access the server, use vagrant ssh ---
+echo --- To view the web client go to http://localhost:8080/geoserver ---
+echo ' '
+
+# run startup script and have it run in the background - output logged to nohup.out
+
+sh /usr/local/geoserver/bin/startup.sh 0<&- &>/dev/null &
