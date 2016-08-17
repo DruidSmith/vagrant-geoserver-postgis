@@ -4,7 +4,7 @@ echo *** Installing PostGIS ***
 	wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | apt-key add -
 	sudo apt-add-repository -y ppa:georepublic/pgrouting
     sudo apt-get update
-	sudo apt-get install -y postgresql-9.4-postgis-2.1 pgadmin3 postgresql-contrib
+	sudo apt-get install -y postgresql-9.4-postgis-2.1 pgadmin3 postgresql-contrib libssl-dev
 # Enable Adminpack
 #	sudo -u postgres psql
 #	CREATE EXTENSION adminpack;
@@ -25,10 +25,14 @@ echo --- PostGIS Installed - note there will be post-configuration steps needed 
 # Install JRE for GeoServer
 echo ' '
 echo --- Installing JRE ---
-sudo apt-get install -y default-jre
+sudo add-apt-repository ppa:openjdk-r/ppa -y
+sudo apt-get update
+sudo apt-get install -y openjdk-8-jre -y
+echo "Java installed?"
+# sleep 20s
 
-# Config JRE
-JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64
+# Config JRE - still needs to be fixed
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 export JAVA_HOME
 
 echo ' '
@@ -53,11 +57,11 @@ cd /usr/local
 echo ' '
 echo --- Downloading GeoServer package - please wait ---
 
-wget -nv -O tmp.zip http://sourceforge.net/projects/geoserver/files/GeoServer/2.7.1.1/geoserver-2.7.1.1-bin.zip && unzip tmp.zip -d /usr/local/ && rm tmp.zip
+wget -nv -O tmp.zip http://sourceforge.net/projects/geoserver/files/GeoServer/2.9.1/geoserver-2.9.1-bin.zip && unzip tmp.zip -d /usr/local/ && rm tmp.zip
 
 echo ' '
 echo --- Package unzipped - configuring GeoServer directory ---
-cp -r /usr/local/geoserver-2.7.1.1/* /usr/local/geoserver && sudo rm -rf /usr/local/geoserver-2.7.1.1/
+cp -r /usr/local/geoserver-2.9.1/* /usr/local/geoserver && sudo rm -rf /usr/local/geoserver-2.9.1/
 
 echo ' '
 echo --- GeoServer Installed ---
@@ -73,8 +77,10 @@ cd /usr/local/geoserver/bin
 # user that shall run GeoServer
 USER=geoserver
 GEOSERVER_DATA_DIR=/home/$USER/data_dir
+export GEOSERVER_DATA_DIR
 #GEOSERVER_HOME=/home/$USER/geoserver
 GEOSERVER_HOME=/usr/local/geoserver/
+export GEOSERVER_HOME
 
 PATH=/usr/sbin:/usr/bin:/sbin:/bin
 DESC="GeoServer daemon"
@@ -105,4 +111,14 @@ echo ' '
 
 # run startup script and have it run in the background - output logged to nohup.out
 
+echo "USER is" $USER
+echo "GEOSERVER_DATA_DIR is" $GEOSERVER_DATA_DIR
+echo "GEOSERVER_HOME is " $GEOSERVER_HOME
+
+cd /usr/local/geoserver/bin/
+echo " "
+echo "Working directory:"
+pwd
+echo "--------"
+echo "Starting up GeoServer"
 sh /usr/local/geoserver/bin/startup.sh 0<&- &>/dev/null &
